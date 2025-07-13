@@ -109,7 +109,7 @@ export const signOut = (req, res, next) => {
         if (!token) return res.status(401).json({ success: false, message: 'token not found' })
 
 
-        res.clearCookie('token', { sameSite: "lax", secure: false, httpOnly: true })
+        res.clearCookie('token', { sameSite: "none", secure: false, httpOnly: true })
         res.status(200).json({ success: true, message: 'logged out successfully' })
     } catch (error) {
         next(error)
