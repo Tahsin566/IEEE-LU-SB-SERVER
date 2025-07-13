@@ -3,7 +3,6 @@ import express from 'express'
 import cors from 'cors'
 import AuthRouter from '../routes/user.route.js'
 import BlogRouter from '../routes/blog.route.js'
-import PaymentRouter from '../routes/payment.route.js'
 import ResearchRouter from '../routes/research.route.js'
 import { mongoconnect } from '../config/mongodb.js'
 import cookieParser from 'cookie-parser'
@@ -14,7 +13,6 @@ import { Errorhandler } from '../middlewares/error.middleware.js'
 import slugify from 'slugify'
 import EventRouter from '../routes/event.route.js'
 import MagazineRouter from '../routes/magazine.route.js'
-import { Research } from '../models/research.model.js'
 import NewsRouter from '../routes/news.route.js'
 import ContactRouter from '../routes/contact.route.js'
 import CommitteeRouter from '../routes/committee.route.js'
@@ -38,7 +36,7 @@ app.use('/css',express.static('views/css'))
 
 
 app.use(cors({
-    origin:"https://ieeelusb.netlify.app/signup",
+    origin:"https://ieeelusb.netlify.app",
     credentials:true
 }))
 app.use(cookieParser())
@@ -46,7 +44,6 @@ app.use(cookieParser())
 
 app.use('/auth',AuthRouter)
 app.use('/blog',BlogRouter)
-app.use('/payment',PaymentRouter)
 app.use('/research',ResearchRouter)
 app.use('/event',EventRouter)
 app.use('/magazine',MagazineRouter)
