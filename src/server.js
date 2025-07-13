@@ -9,6 +9,7 @@ import cookieParser from 'cookie-parser'
 import path from 'path'
 import fs from 'fs'
 import { Errorhandler } from '../middlewares/error.middleware.js'
+import slugify from 'slugify'
 import EventRouter from '../routes/event.route.js'
 import MagazineRouter from '../routes/magazine.route.js'
 import NewsRouter from '../routes/news.route.js'
@@ -30,6 +31,7 @@ const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
+app.use('/files',express.static('files'))
 
 
 app.use(cors({
@@ -37,7 +39,6 @@ app.use(cors({
     // origin:'http://localhost:5173',
     credentials:true
 }))
-
 app.use(cookieParser())
 
 
