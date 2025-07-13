@@ -51,7 +51,7 @@ export const signUp = async (req, res, next) => {
         newUser.createdAt = undefined
         newUser.updatedAt = undefined
 
-        return res.cookie('token', token, { sameSite: 'lax', secure: false, maxAge: 7 * 24 * 60 * 60 * 1000, httpOnly: true }).json({ success: true, user: newUser, token })
+        return res.cookie('token', token, { sameSite: "none", secure: false, maxAge: 7 * 24 * 60 * 60 * 1000, httpOnly: true }).json({ success: true, user: newUser, token })
 
     } catch (error) {
         next(error)
@@ -86,7 +86,7 @@ export const signIn = async (req, res, next) => {
             user._id = undefined
             user.password = undefined
 
-            return res.cookie('token', token, { sameSite: 'lax', secure: false, maxAge: 7 * 24 * 60 * 60 * 1000, httpOnly: true })
+            return res.cookie('token', token, { sameSite: 'none', secure: false, maxAge: 7 * 24 * 60 * 60 * 1000, httpOnly: true })
                 .json({ success: true, user: user, token })
 
         }
