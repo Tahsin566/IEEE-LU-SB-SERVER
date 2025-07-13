@@ -36,7 +36,7 @@ app.use('/css',express.static('views/css'))
 
 
 app.use(cors({
-    origin:'http://localhost:5173',
+    origin:'https://ieeelusb.netlify.app',
     credentials:true
 }))
 app.use(cookieParser())
