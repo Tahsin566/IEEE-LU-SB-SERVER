@@ -51,7 +51,7 @@ export const signUp = async (req, res, next) => {
         newUser.createdAt = undefined
         newUser.updatedAt = undefined
 
-        return res.cookie('token', token, { expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), httpOnly: true ,sameSite:"none",secure:false}).json({ success: true, user: newUser, token })
+        return res.cookie('token', token, { expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), httpOnly: true ,sameSite:"lax",secure:false}).json({ success: true, user: newUser, token })
 
     } catch (error) {
         next(error)
@@ -81,13 +81,13 @@ export const signIn = async (req, res, next) => {
         if (user && await bcrypt.compare(password, user.password)) {
 
 
-            const signintoken = await jwt.sign({ _id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "7d" })
+            const token = await jwt.sign({ _id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "7d" })
 
             user._id = undefined
             user.password = undefined
 
-            return res.cookie('token', signintoken, { sameSite: 'none', secure: false, maxAge: 7 * 24 * 60 * 60 * 1000, httpOnly: true })
-                .json({ success: true, user: user })
+            return res.cookie('token', token, { sameSite: 'lax', secure: false, maxAge: 7 * 24 * 60 * 60 * 1000, httpOnly: true })
+                .json({ success: true, user: user ,token})
 
         }
 
@@ -109,7 +109,7 @@ export const signOut = (req, res, next) => {
         if (!token) return res.status(401).json({ success: false, message: 'token not found' })
 
 
-        res.clearCookie('token', { sameSite: "none", secure: false, httpOnly: true })
+        res.clearCookie('token', { sameSite: "lax", secure: false, httpOnly: true })
         res.status(200).json({ success: true, message: 'logged out successfully' })
     } catch (error) {
         next(error)
