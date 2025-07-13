@@ -7,10 +7,8 @@ import ResearchRouter from '../routes/research.route.js'
 import { mongoconnect } from '../config/mongodb.js'
 import cookieParser from 'cookie-parser'
 import path from 'path'
-import dotenv from 'dotenv'
 import fs from 'fs'
 import { Errorhandler } from '../middlewares/error.middleware.js'
-import slugify from 'slugify'
 import EventRouter from '../routes/event.route.js'
 import MagazineRouter from '../routes/magazine.route.js'
 import NewsRouter from '../routes/news.route.js'
@@ -24,6 +22,7 @@ import GalleryRouter from '../routes/gallery.route.js'
 import { adminRoute } from '../middlewares/admin.middleware.js'
 import { protectedRoute } from '../middlewares/auth.middleware.js'
 
+import dotenv from 'dotenv'
 dotenv.config()
 
 const app = express()
@@ -35,8 +34,10 @@ app.use(express.urlencoded({extended:true}))
 
 app.use(cors({
     origin:'https://ieeelusb.netlify.app',
+    // origin:'http://localhost:5173',
     credentials:true
 }))
+
 app.use(cookieParser())
 
 
