@@ -231,20 +231,27 @@ export const addSocialLinks = async (req, res, next) => {
     if (!foundUser) {
         return res.json({ success: false, message: "User not found" })
     }
-    if(!existingCommittee){
-        return res.json({ success: false, message: "Committee member not found" })
-    }
+    
 
     try {
 
         if (facebook) {
             foundUser.userfacebook = facebook
-            existingCommittee.facebook = facebook
         }
 
         if (linkedin) {
             foundUser.userlinkedin = linkedin
-            existingCommittee.linkedin = linkedin
+        }
+
+        
+        if(existingCommittee){
+            if (facebook) {
+                existingCommittee.facebook = facebook
+            }
+    
+            if (linkedin) {
+                existingCommittee.linkedin = linkedin
+            }
         }
 
         await foundUser.save()
