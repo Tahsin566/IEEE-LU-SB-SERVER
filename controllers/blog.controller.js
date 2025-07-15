@@ -7,7 +7,7 @@ import { blogValidator } from "../validator/blog.validator.js"
 export const getBlog = async (req, res, next) => {
 
     try {
-        const allBlog = await Blog.find()
+        const allBlog = await Blog.find({},{},{sort:{createdAt:-1}})
         res.json({ success: true, blog: allBlog })
 
     } catch (error) {
@@ -18,7 +18,7 @@ export const getBlog = async (req, res, next) => {
 export const getApprovedBlog = async (req, res, next) => {
 
     try {
-        const allBlog = await Blog.find({ isApproved: true })
+        const allBlog = await Blog.find({ isApproved: true },{},{sort:{createdAt:-1}})
 
         const trendingBlog = await Blog.aggregate([
             {

@@ -226,21 +226,29 @@ export const addSocialLinks = async (req, res, next) => {
 
     const foundUser = await User.findOne({ email: email })
 
+    const existingCommittee = await Committee.findOne({ IEEEID: foundUser?.IEEEID })
+
     if (!foundUser) {
         return res.json({ success: false, message: "User not found" })
+    }
+    if(!existingCommittee){
+        return res.json({ success: false, message: "Committee member not found" })
     }
 
     try {
 
         if (facebook) {
             foundUser.userfacebook = facebook
+            existingCommittee.facebook = facebook
         }
 
         if (linkedin) {
             foundUser.userlinkedin = linkedin
+            existingCommittee.linkedin = linkedin
         }
 
         await foundUser.save()
+        await existingCommittee.save()
 
         res.json({ success: true, message: "Updated successfully" })
     } catch (error) {

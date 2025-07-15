@@ -93,7 +93,7 @@ export const addMagazine = async(req,res,next)=>{
 
 export const getMagazine = async(req,res,next)=>{
     try {
-        const allMagazine = await Magazine.find()
+        const allMagazine = await Magazine.find({},{},{sort:{createdAt:-1}})
         res.status(200).json({success:true,magazine:allMagazine})
     } catch (error) {
         next(error)

@@ -169,6 +169,15 @@ router.get('/', async (req, res, next) => {
     }
 })
 
+router.get('/advisor', async (req, res, next) => {
+    try {
+        const advisor = await Committee.find({ CommitteeMemType: 'Advisor' })
+        res.status(200).json({ success: true, advisor })
+    } catch (error) {
+        next(error)
+    }
+})
+
 router.get('/excom', async (req, res, next) => {
     try {
         const excom = await Committee.find({ CommitteeMemType: 'ExCom' })

@@ -7,9 +7,9 @@ import { newsValidator } from "../validator/news.validator.js"
 
 export const getNews = async(req,res,next)=>{
     try {
-        const news = await News.find()
+        const news = await News.find({},{},{sort:{createdAt:-1}})
 
-        const trendingNews = await News.find().sort({createdAt:1}).limit(2)
+        const trendingNews = await News.find().sort({createdAt:-1}).limit(2)
         res.status(200).json({success:true,news,trendingNews})
     } catch (error) {
         next(error)

@@ -188,7 +188,7 @@ export const deleteResearch = async (req, res, next) => {
 
 export const getResearch = async (req, res, next) => {
     try {
-        const allResearch = await Research.find()
+        const allResearch = await Research.find({},{},{ sort: { createdAt: -1 } })
         res.status(200).json({ success: true, research: allResearch })
     } catch (error) {
         next(error)
@@ -196,7 +196,7 @@ export const getResearch = async (req, res, next) => {
 }
 export const getApprovedResearch = async (req, res, next) => {
     try {
-        const allResearch = await Research.find({isApproved: true})
+        const allResearch = await Research.find({isApproved: true},{},{ sort: { createdAt: -1 } })
 
         const totalAuthor = await Research.aggregate([
             {

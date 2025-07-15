@@ -7,7 +7,7 @@ import fs from 'fs'
 
 export const getAllEvent = async (req, res, next) => {
     try {
-        const allEvent = await Event.find({})
+        const allEvent = await Event.find({}, {}, { sort: { createdAt: -1 } })
         const getallTypes = await Event.aggregate([
             {
                 $group: {
@@ -65,7 +65,7 @@ export const getUpcomingEventDetailsImageAndCountDown = async (req, res, next) =
                 $match: { status: 'upcoming' }
             },
             {
-                $sort: { startdate: 1 }
+                $sort: { startdate: -1 }
             },
             {
                 $limit: 1
@@ -90,7 +90,7 @@ export const getUpcomingEventDetailsImageAndCountDown = async (req, res, next) =
 
 export const getFeaturedEvents = async (req, res, next) => {
     try {
-        const featuredEvents = await Event.find({ isFeatured: true }).limit(1)
+        const featuredEvents = await Event.find({ isFeatured: true },{},{sort:{createdAt:-1}}).limit(1)
         res.status(200).json({ success: true, event: featuredEvents[0] })
     } catch (error) {
         next(error)

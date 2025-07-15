@@ -4,7 +4,7 @@ import fs from 'fs'
 
 export const getGallery = async(req,res,next)=>{
     try {
-        const allGallery = await Gallery.find()
+        const allGallery = await Gallery.find({},{},{sort:{createdAt:-1}})
         res.status(200).json({success:true,gallery:allGallery})
     } catch (error) {
         next(error)
