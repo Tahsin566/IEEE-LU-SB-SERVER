@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
+import { type } from "os";
 
 const EventSchema = new mongoose.Schema({
 
@@ -42,7 +43,12 @@ const EventSchema = new mongoose.Schema({
     registrationLink:{
         type:String,
         default:''
+    },
+    banner:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Banner'
     }
+    
 },{timestamps:true})
 
 export const Event = mongoose.model('Event',EventSchema)

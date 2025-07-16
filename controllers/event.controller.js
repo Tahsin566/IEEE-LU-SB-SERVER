@@ -1,5 +1,6 @@
 
 import { deleteFile, uploadFile } from "../config/cloudinary.js"
+import { Banner } from "../models/banner.model.js"
 import { Event } from "../models/event.model.js"
 import { User } from "../models/user.model.js"
 import fs from 'fs'
@@ -163,7 +164,15 @@ export const addEvent = async (req, res, next) => {
             registrationLink
         })
 
+        const newBanner = new Banner({
+            title: name,
+            bannerType: 'Event',
+            description,
+            image: eventImage
+        })
+        newEvent.banner = newBanner._id
         await newEvent.save()
+        await newBanner.save()
 
         res.status(201).json({ success: true, message: 'Event added' })
     } catch (error) {
@@ -197,12 +206,20 @@ export const updateEvent = async (req, res, next) => {
         existingEvent.type = type
         existingEvent.registrationLink = registrationLink
 
-        if (req.file) {
-           await deleteFile(existingEvent?.image)
-           existingEvent.image = await uploadFile(req?.file?.path)
+        const existingBanner = await Banner.findById(existingEvent?.banner)
+        if (existingBanner) {
+            existingBanner.title = name
+            existingBanner.description = description
         }
-
+        
+        if (req.file) {
+            await deleteFile(existingEvent?.image)
+            existingEvent.image = await uploadFile(req?.file?.path)
+            existingBanner.image = existingEvent.image || ''
+        }
+        
         await existingEvent.save()
+        await existingBanner.save()
 
         res.status(200).json({ success: true, event: existingEvent })
     } catch (error) {
@@ -221,6 +238,7 @@ export const deleteEvent = async (req, res, next) => {
 
         existingEvent.image ? await deleteFile(existingEvent?.image) : null
         await Event.deleteOne({ _id: id })
+        await Banner.deleteOne({ _id: existingEvent?.banner })
         return res.status(200).json({ deleted: true })
     } catch (error) {
         next(error)
