@@ -23,7 +23,7 @@ const blogSchema = new mongoose.Schema({
     },
     authorBio:{
         type:String,
-        default:'Author at IEEE Computer Society'
+        default:'Author at IEEE CS LU SBC'
     },
     category:{
         type:String,

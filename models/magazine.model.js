@@ -36,7 +36,7 @@ export const magazineSchema = new mongoose.Schema({
     },
     publishedBy:{
         type:String,
-        default:'IEEE LU Student Branch'
+        default:'IEEE CS LU SB Chapter'
     },
     volumeNumber:{
         type:String,
