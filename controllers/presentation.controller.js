@@ -38,6 +38,6 @@ export const addPresentation = async (req, res, next) => {
         res.json({msg:'Presentation Slide Route'});
 
     } catch (error) {
-        
+        next(error)
     }
 }

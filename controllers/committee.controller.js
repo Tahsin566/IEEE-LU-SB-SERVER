@@ -1,4 +1,5 @@
 import { Committee } from "../models/committee.model.js"
+import { Experience } from "../models/experience.model.js"
 
 
 export const addCommitee = async (req, res, next) => {
