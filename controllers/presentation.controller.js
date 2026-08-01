@@ -1,5 +1,5 @@
 import { PresentationSlide } from "../models/presentation.slide.model.js"
-
+import { uploadFile } from '../config/cloudinary.js'
 export const getAllPresentation = async (req, res, next) => {
 
     try {
